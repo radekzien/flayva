@@ -1,26 +1,41 @@
-import { useGetPostById } from "@/hooks/post.hooks";
-import { queries } from "@/queries";
-import { useQuery } from "@tanstack/react-query";
-
+//import { useGetPostById } from "@/hooks/post.hooks";
 const ViewDetailedRecipePage = ({ id }: { id: string }) => {
-  const { data: fetchedPost, isLoading, error } = useGetPostById(id);
-  const { data: recipeIngredients, isLoading: ingredientsLoading, error: ingredientsError } = useQuery({
-    queryKey: ["recipe", "queryRecipeIngredients", id],
-    queryFn: () => queries.recipe.queryRecipeIngredients(id),
-  });
-  const { data: recipeInstructions, isLoading: instructionsLoading, error: instructionsError } = useQuery({
-    queryKey: ["recipe", "queryRecipeInstructions", id],
-    queryFn: () => queries.recipe.queryRecipeInstructions(id),
-  });
-
-  if (isLoading || ingredientsLoading) return <div>Loading...</div>;
-  if (error) return <div>Error fetching post: {error.message}</div>;
-  if (ingredientsError) return <div>Error fetching ingredients: {ingredientsError.message}</div>;
-  if (instructionsError) return <div>Error fetching instructions: {instructionsError.message}</div>;
+  // Fetch the post details
+  //const { data: fetchedPost, isLoading, error } = useGetPostById(id);
+  //console.log(fetchedPost);
+  //Hard-coded values just to develop UI. Just plug in all the values from the object into the consts
+  const postDetails = {
+    recipeDescription: "Pasta with Cheese",
+    recipeTitle: "Cheesy Pasta",
+    recipeIngredients: [{name:'Pasta',whole_amount: 250, numerator: 0, denominator: 0, units: 'g'},
+      {name:'Cheese',whole_amount: 100, numerator: 0, denominator: 0, units: 'g'}
+    ],
+    recipeSteps: [{step: 1, instruction: "Boil pasta"}, {step: 2, instruction: "Drain pasta"}, {step: 3, instruction: "Add cheese"},
+      {step: 4, instruction: "Mix in until melted and serve!"}]
+  }
 
   return (
-    <div>
-      <h1>Recipe Details</h1>
+    <div className="DetailedRecipeComponent">
+      <div className="Details">
+        <h1>{postDetails.recipeTitle}</h1>
+        <h2>{postDetails.recipeDescription}</h2>
+      </div>
+      <div className="Ingredients">
+        <h1>Ingredients</h1>
+        <h2>{postDetails.recipeIngredients.map((ingredient, index) => { return (
+          <li key = {index}>
+            {ingredient.name} {ingredient.whole_amount} {ingredient.units}
+          </li>
+        )})}</h2>
+        </div>
+        <div className="Instructions">
+          <h1>Steps</h1>
+          <h2>{postDetails.recipeSteps.map((step, index) => { return (
+            <ul key = {index}>
+              {step.step}. {step.instruction}
+            </ul>
+          )})}</h2>
+      </div>
     </div>
   );
 };

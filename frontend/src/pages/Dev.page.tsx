@@ -1,6 +1,7 @@
 import { TagsInput } from "@/components/recipe/create/recipe-tags-input";
 import { RecipeTag } from "@flayva-monorepo/shared/types";
 import { useState } from "react";
+import  ViewDetailedRecipePage from "@/components/recipe/DetailedRecipe.tsx"
 
 export default function DevPage() {
   const [tags, setTags] = useState<RecipeTag[]>([]);
@@ -13,6 +14,7 @@ export default function DevPage() {
         anything else.
       </p>
       <TagsInput tags={tags} onTagsChange={setTags} />
+      <ViewDetailedRecipePage id = "1" />
     </div>
   );
 }

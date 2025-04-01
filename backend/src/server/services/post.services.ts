@@ -40,7 +40,6 @@ export const deletePost = async (postId: string) => {
  */
 export const getPostById = async (postId: string) => {
   //TODO: process db response
-
   const post = await postRepo.getPostById(postId);
 
   return post;
